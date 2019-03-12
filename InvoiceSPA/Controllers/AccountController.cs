@@ -36,5 +36,10 @@ namespace InvoiceSPA.Controllers
         {
             return loginInput.Password == "password" && loginInput.Username == "mock";
         }
+
+        public bool Register()
+        {
+            return true;
+        }
     }
 }

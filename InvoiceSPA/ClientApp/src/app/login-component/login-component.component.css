@@ -1,6 +1,43 @@
-.login-box {
-  margin-top: 50px;
+section {
+  padding: 110px 0;
 }
-.column {
-  max-width: 450px
+
+.form-container {
+  width: 60%;
+  margin: auto;
+}
+
+.form-border {
+  border: 2px solid #222222;
+  border-radius: 0.5em;
+  padding: 50px 30px;
+}
+
+.right-move {
+  text-align: right;
+}
+
+.btn-primary {
+  width: 100%;
+  color: #fff;
+  padding: 10px;
+  background-color: #FFC423;
+  border: #FFC423;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #222222;
+  border: #FFC423;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+@media (max-width: 575.98px) {
+  .form-container {
+    width: auto;
+    margin: auto;
+  }
 }
