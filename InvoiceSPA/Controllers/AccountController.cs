@@ -9,9 +9,12 @@
 
 namespace InvoiceSPA.Controllers
 {
+    using System;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     using InvoiceSPA.Models;
+    using InvoiceSPA.Services;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +26,20 @@ namespace InvoiceSPA.Controllers
     public class AccountController : Controller
     {
         /// <summary>
+        /// UserService reference
+        /// </summary>
+        private readonly UserService userService;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userService"></param>
+        public AccountController(UserService userService)
+        {
+            this.userService = userService;
+        }
+
+        /// <summary>
         /// The login.
         /// </summary>
         /// <param name="loginInput">
@@ -32,14 +49,48 @@ namespace InvoiceSPA.Controllers
         /// The <see cref="Task"/>.
         /// </returns>
         [HttpPost]
-        public bool Login([FromBody] LoginInput loginInput)
+        public async Task<bool> Login([FromBody] LoginInput loginInput)
         {
-            return loginInput.Password == "password" && loginInput.Username == "mock";
+            if (!ModelState.IsValid)
+            {
+                return false;
+            }
+
+            try
+            {
+                return await this.userService.Login(loginInput);
+            }
+            catch (Exception exception)
+            {
+               Debug.Write($"An error occured: {exception.Message}");
+
+               return false;
+            }
         }
 
-        public bool Register()
+        /// <summary>
+        /// Register a new user
+        /// </summary>
+        /// <param name="uiRegister"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<bool> Register([FromBody] UiRegister uiRegister)
         {
-            return true;
+            if (!ModelState.IsValid)
+            {
+                return false;
+            }
+
+            try
+            {
+                return await this.userService.Register(uiRegister);
+            }
+            catch (Exception exception)
+            {
+                Debug.Write($"An error occured: {exception.Message}");
+
+                return false;
+            }
         }
     }
 }

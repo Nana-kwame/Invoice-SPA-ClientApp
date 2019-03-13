@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace InvoiceSPA.Models
 {
     /// <summary>
@@ -17,11 +19,13 @@ namespace InvoiceSPA.Models
         /// <summary>
         /// Gets or sets the username.
         /// </summary>
+        [Required]
         public string Username { get; set; }
 
         /// <summary>
         /// Gets or sets the password.
         /// </summary>
+        [Required]
         public string Password { get; set; }
     }
 }

@@ -15,9 +15,10 @@ namespace InvoiceSPA
     using InvoiceSPA.Interfaces;
     using InvoiceSPA.Repositories;
     using InvoiceSPA.Services;
-
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,18 @@ namespace InvoiceSPA
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            #region snippet1
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
+            #endregion
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=InvoiceSPADb;Trusted_Connection=True;"));
 
             // services
@@ -72,6 +85,7 @@ namespace InvoiceSPA
             services.AddScoped<IRecipientService, RecipientService>();
             services.AddScoped<IInvoiceItemRepository, InvoiceItemRepository>();
             services.AddScoped<IAuthorityRepository, AuthorityRepository>();
+            services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

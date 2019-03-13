@@ -48,6 +48,11 @@ namespace InvoiceSPA.Data
         /// </summary>
         public DbSet<Recipient> Recipients { get; set; }
 
+        /// <summary>
+        /// The Application User
+        /// </summary>
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
         /// <inheritdoc />
         /// <summary>
         /// The on model creating.
