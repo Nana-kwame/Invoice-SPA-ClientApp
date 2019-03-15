@@ -81,7 +81,7 @@
 
            var claims = new List<Claim>
            {
-                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+                new Claim("fullname", $"{user.FirstName} {user.LastName}"),
                 new Claim("username", user.Username),
            };
 
@@ -98,7 +98,7 @@
                 // value set here overrides the ExpireTimeSpan option of 
                 // CookieAuthenticationOptions set with AddCookie.
 
-                //IsPersistent = true,
+                IsPersistent = true,
                 // Whether the authentication session is persisted across 
                 // multiple requests. When used with cookies, controls
                 // whether the cookie's lifetime is absolute (matching the
@@ -119,6 +119,70 @@
 
            return true;
         }
+
+        /// <summary>
+        /// Validate a user, also used for retrive username
+        /// </summary>
+        /// <param name="validateUserInput"></param>
+        /// <returns></returns>
+        public async Task<UiUser> ValidateUser(ValidateUserInput validateUserInput)
+        {
+            var user = await this.applicationDbContext.ApplicationUsers.FirstOrDefaultAsync(
+                x => validateUserInput.LastName.Equals(x.LastName, StringComparison.OrdinalIgnoreCase)
+                     && validateUserInput.PhoneNumber.Equals(x.PhoneNumber, StringComparison.OrdinalIgnoreCase));
+
+            var uiUser = new UiUser
+            {
+                Username = user.Username ?? string.Empty
+            };
+
+            return uiUser;
+        }
+
+        /// <summary>
+        /// Reset user password
+        /// </summary>
+        /// <param name="changePasswordInput"></param>
+        /// <returns></returns>
+        public async Task<bool> ChangePassword(ChangePasswordInput changePasswordInput)
+        {
+            var user = await this.applicationDbContext.ApplicationUsers.FirstOrDefaultAsync(
+                           x => x.Username == changePasswordInput.Username);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            var passwordDetails = CreatePassword(changePasswordInput.Password);
+
+            user.HashedPassword = passwordDetails.HashedPassword;
+            user.Salt = passwordDetails.Salt;
+
+            this.applicationDbContext.ApplicationUsers.Update(user);
+            await this.applicationDbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        /// <summary>
+        /// Log out 
+        /// </summary>
+        /// <returns></returns>
+        public async Task Logout()
+        {
+            await this.httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        /// <summary>
+        /// Check if a user is authenticated
+        /// </summary>
+        /// <returns></returns>
+        public bool Authenticated()
+        {
+            return this.httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+        }
+
 
         /// <summary>
         /// Create hashed password

@@ -65,14 +65,13 @@ namespace InvoiceSPA
             });
 
             services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+                {
+                    options.CheckConsentNeeded = context => true;
+                    options.MinimumSameSitePolicy = SameSiteMode.None;
+                });
 
-            #region snippet1
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
-            #endregion
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -114,6 +113,10 @@ namespace InvoiceSPA
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseCookiePolicy();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
