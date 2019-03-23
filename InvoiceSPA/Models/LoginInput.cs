@@ -27,5 +27,10 @@ namespace InvoiceSPA.Models
         /// </summary>
         [Required]
         public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sers the remember
+        /// </summary>
+        public bool Remember { get; set; }
     }
 }
