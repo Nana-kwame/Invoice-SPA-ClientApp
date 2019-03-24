@@ -11,6 +11,8 @@ import { LoginComponent } from './login-component/login-component.component';
 import { AuthenticationService } from './services/authentication.service';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { InvoiceService } from './services/invoice.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     NavMenuComponent,
     LoginComponent,
     RegisterComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,6 +32,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'dashboard', component: DashboardComponent },
       {
         path: '',
         redirectTo: 'login',
@@ -37,7 +41,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ])
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    InvoiceService
     ],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginModel } from '../models/models';
 import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-component',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   public valid: boolean;
   public errors: Array<string> = [];
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService,
+    private router: Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -24,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       username : new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      remember: new FormControl()
+      remember: new FormControl(false)
     });
   }
 
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
         this.errors.push("Log in failed, please provide a valid username or password");
         return;
       } else {
-        //redirect user to dashboard
+        this.router.navigate(['/dashboard'])
       }
     }, error => {
         this.errors.push("Failed to log in");

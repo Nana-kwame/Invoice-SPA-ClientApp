@@ -42,7 +42,6 @@ namespace InvoiceSPA.Models
         /// <summary>
         /// Gets or sets the created by.
         /// </summary>
-        [Required]
         public string UpdatedBy { get; set; }
 
         /// <summary>

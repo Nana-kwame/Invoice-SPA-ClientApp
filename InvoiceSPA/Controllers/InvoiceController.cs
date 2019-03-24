@@ -64,6 +64,8 @@ namespace InvoiceSPA.Controllers
 
             try
             {
+                createInvoiceInput.CreatedBy = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "fullname")?.Value;
+
                 apiResponse = await this.invoiceService.CreateInvoice(createInvoiceInput);
 
                 if (apiResponse.IsSuccessful)
@@ -108,6 +110,8 @@ namespace InvoiceSPA.Controllers
 
             try
             {
+                updateInvoiceInput.UpdatedBy = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "fullname")?.Value;
+
                 apiResponse = await this.invoiceService.UpdateInvoice(updateInvoiceInput);
 
                 if (apiResponse.IsSuccessful)
@@ -201,15 +205,10 @@ namespace InvoiceSPA.Controllers
 
                 return this.BadRequest(uiInvoice);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 return this.StatusCode(
-                    500,
-                    new ApiResponse
-                    {
-                        IsSuccessful = false,
-                        Message = exception.InnerException.Message
-                    });
+                    500, new UiInvoice());
             }
         }
 
@@ -223,15 +222,12 @@ namespace InvoiceSPA.Controllers
         /// The <see cref="Task"/>.
         /// </returns>
         [HttpGet]
-        public async Task<IActionResult> GetUserInvoices([FromQuery]string user)
+        public async Task<IActionResult> GetUserInvoices()
         {
-            if (string.IsNullOrEmpty(user) || string.IsNullOrWhiteSpace(user))
-            {
-                return this.BadRequest(new UiUserInvoice());
-            }
-
             try
             {
+                var user = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "fullname")?.Value;
+
                 var uiUserInvoices = await this.invoiceService.GetUserInvoices(user);
 
                 if (uiUserInvoices.InvoicesApprovedByUser.Any() || uiUserInvoices.InvoicesCreatedByUser.Any())
@@ -276,6 +272,8 @@ namespace InvoiceSPA.Controllers
 
             try
             {
+                approveInvoiceInput.Authority = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "fullname")?.Value;
+
                 apiResponse = await this.invoiceService.ApproveInvoice(approveInvoiceInput);
 
                 if (apiResponse.IsSuccessful)

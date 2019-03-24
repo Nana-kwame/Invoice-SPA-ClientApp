@@ -36,7 +36,6 @@ namespace InvoiceSPA.Models
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
-        [Required]
         public string Title { get; set; }
 
         /// <summary>
@@ -52,13 +51,11 @@ namespace InvoiceSPA.Models
         /// <summary>
         /// Gets or sets the invoice items.
         /// </summary>
-        [Required]
         public IEnumerable<InvoiceItemInput> InvoiceItems { get; set; }
 
         /// <summary>
         /// Gets or sets the authorities.
         /// </summary>
-        [Required]
         public IEnumerable<AuthorityInput> Authorities { get; set; }
     }
 }

@@ -78,7 +78,7 @@ namespace InvoiceSPA.Services
         /// The <see cref="T:System.Threading.Tasks.Task" />.
         /// </returns>
         public async Task<ApiResponse> CreateInvoice(CreateInvoiceInput createInvoiceInput)
-        {          
+        {
             Recipient recipient;
 
             if (string.IsNullOrEmpty(createInvoiceInput.RecipientNumber))
