@@ -353,6 +353,11 @@ namespace InvoiceSPA.Services
         {
             var invoices = await this.invoiceRepository.FindByCreator(user);
 
+            if (!invoices.Any())
+            {
+                return new UiUserInvoice();
+            }
+
             var userInvoices = new UiUserInvoice();
 
             if (invoices.Any())

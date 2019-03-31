@@ -13,6 +13,10 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InvoiceService } from './services/invoice.service';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { SearchComponent } from './search/search.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { InvoiceService } from './services/invoice.service';
     LoginComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    DashboardComponent
+    DashboardComponent,
+    InvoiceComponent,
+    SearchComponent,
+    PageNotFoundComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -33,6 +41,10 @@ import { InvoiceService } from './services/invoice.service';
       { path: 'register', component: RegisterComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'invoice', component: InvoiceComponent },
+      { path: 'search', component: SearchComponent },
+      { path: '**', component: PageNotFoundComponent },
+      { path: 'confirmation', component: ConfirmationComponent },
       {
         path: '',
         redirectTo: 'login',

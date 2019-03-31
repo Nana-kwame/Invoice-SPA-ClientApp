@@ -9,9 +9,13 @@
 
 namespace InvoiceSPA
 {
+    using System;
+    using System.Collections.Generic;
+
     using InvoiceApp.Repositories;
 
     using InvoiceSPA.Data;
+    using InvoiceSPA.Entities;
     using InvoiceSPA.Interfaces;
     using InvoiceSPA.Repositories;
     using InvoiceSPA.Services;
@@ -22,6 +26,7 @@ namespace InvoiceSPA
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Internal;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -150,6 +155,217 @@ namespace InvoiceSPA
                 .GetRequiredService<ApplicationDbContext>();
 
             context.Database.Migrate();
+
+            //pupulate database on startup 
+
+            if (!context.Recipients.Any())
+            {
+                var recipient = new List<Recipient>
+                {
+                    new Recipient
+                    {
+                        Name = "CloudBuilders Ghana Ltd",
+                        Address = "P.O.Box TF 292, La - Accra, Ghana",
+                        RecipientNumber = "RNo.001",
+                        Invoices = new List<Invoice>
+                        {
+                            new Invoice
+                            {
+                                InvoiceNo = "INo.1",
+                                Title = "First Job",
+                                CreatedBy = "Peter Awuah",
+                                CreatedOn = DateTime.Now,
+                                Approved = false,
+                                Status = true,
+                                Authorities = new List<Authority>()
+                                {
+                                    new Authority
+                                    {
+                                        Name = "Peter Awuah",
+                                        Department = "IT"
+                                    }
+                                },
+                                InvoiceItems = new List<InvoiceItem>()
+                                {
+                                    new InvoiceItem()
+                                    {
+                                        Name = "Proof of Concept",
+                                        Amount = "2000",
+                                        Description = "Poof of appplication"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                        Name = "First deliverable",
+                                        Amount = "2000",
+                                        Description = "Delivered first application concept"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                        Name = "Final Payment",
+                                        Amount = "2000",
+                                        Description = "Submitted complete solution"
+                                    }
+                                }
+                            },
+                            new Invoice
+                            {
+                                InvoiceNo = "INo.2",
+                                Title = "Second Job",
+                                CreatedBy = "Peter Awuah",
+                                CreatedOn = DateTime.Now,
+                                Approved = false,
+                                Status = true,
+                                Authorities = new List<Authority>()
+                                {
+                                    new Authority
+                                    {
+                                          Name = "Peter Awuah",
+                                          Department = "IT"
+                                    }
+                                },
+                                InvoiceItems = new List<InvoiceItem>()
+                                {
+                                    new InvoiceItem()
+                                    {
+                                        Name = "Proof of Concept",
+                                        Amount = "2000",
+                                        Description = "Poof of appplication"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                        Name = "First deliverable",
+                                        Amount = "2000",
+                                        Description = "Delivered first application concept"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                        Name = "Final Payment",
+                                        Amount = "2000",
+                                        Description = "Submitted complete solution"
+                                    }
+                                }
+                            },
+                            new Invoice
+                            {
+                                InvoiceNo = "INo.3",
+                                Title = "Third Job",
+                                CreatedBy = "Peter Awuah",
+                                CreatedOn = DateTime.Now,
+                                Approved = false,
+                                Status = true,
+                                Authorities = new List<Authority>()
+                                {
+                                    new Authority
+                                    {
+                                        Name = "Peter Awuah",
+                                        Department = "IT"
+                                    }
+                                },
+                                InvoiceItems = new List<InvoiceItem>()
+                                {
+                                    new InvoiceItem()
+                                    {
+                                       Name = "Proof of Concept",
+                                       Amount = "2000",
+                                       Description = "Poof of appplication"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                       Name = "First deliverable",
+                                       Amount = "2000",
+                                       Description = "Delivered first application concept"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                       Name = "Final Payment",
+                                       Amount = "2000",
+                                       Description = "Submitted complete solution"
+                                    }
+                                }
+                            },
+                            new Invoice
+                            {
+                                InvoiceNo = "INo.4",
+                                Title = "Fourth Job",
+                                CreatedBy = "Peter Awuah",
+                                CreatedOn = DateTime.Now,
+                                Approved = false,
+                                Status = true,
+                                Authorities = new List<Authority>()
+                                {
+                                    new Authority
+                                    {
+                                        Name = "Peter Awuah",
+                                        Department = "IT"
+                                    }
+                                },
+                                InvoiceItems = new List<InvoiceItem>()
+                                {
+                                    new InvoiceItem()
+                                    {
+                                        Name = "Proof of Concept",
+                                        Amount = "2000",
+                                        Description = "Poof of appplication"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                        Name = "First deliverable",
+                                        Amount = "2000",
+                                        Description = "Delivered first application concept"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                        Name = "Final Payment",
+                                        Amount = "2000",
+                                        Description = "Submitted complete solution"
+                                    }
+                                }
+                            },
+                            new Invoice
+                            {
+                                InvoiceNo = "INo.5",
+                                Title = "Fifth Job",
+                                CreatedBy = "Peter Awuah",
+                                CreatedOn = DateTime.Now,
+                                Approved = false,
+                                Status = true,
+                                Authorities = new List<Authority>()
+                                {
+                                    new Authority
+                                    {
+                                        Name = "Peter Awuah",
+                                        Department = "IT"
+                                    }
+                                },
+                                InvoiceItems = new List<InvoiceItem>()
+                                {
+                                    new InvoiceItem()
+                                    {
+                                       Name = "Proof of Concept",
+                                       Amount = "2000",
+                                       Description = "Poof of appplication"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                       Name = "First deliverable",
+                                       Amount = "2000",
+                                       Description = "Delivered first application concept"
+                                    },
+                                    new InvoiceItem()
+                                    {
+                                       Name = "Final Payment",
+                                       Amount = "2000",
+                                       Description = "Submitted complete solution"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                context.Recipients.AddRange(recipient);
+                context.SaveChanges();
+            }
         }
     }
 }

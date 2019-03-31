@@ -226,7 +226,8 @@ namespace InvoiceSPA.Controllers
         {
             try
             {
-                var user = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "fullname")?.Value;
+                //var user = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "fullname")?.Value;
+                var user = "Peter Awuah";
 
                 var uiUserInvoices = await this.invoiceService.GetUserInvoices(user);
 
