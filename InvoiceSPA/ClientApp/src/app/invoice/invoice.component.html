@@ -34,7 +34,7 @@
 
         <br/><br/>
       
-        <form class="user">
+        <form [formGroup]="invoiceForm" class="user">
           <div class="text-center">
             <h1 class="h4 text-gray-900">Invoice Form</h1>
           </div>
@@ -51,7 +51,7 @@
 
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Recipient Name">
+                    <input type="text" formControlName="recipientName" class="form-control form-control-user" id="recipient-name" placeholder="Recipient Name">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -59,7 +59,7 @@
 
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Recipient Address">
+                    <input type="text" formControlName="recipientAddress" class="form-control form-control-user" id="recipient-address" placeholder="Recipient Address">
                   </div>
                 </div>
               </div>
@@ -75,11 +75,11 @@
 
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Invoice No.">
+                    <input type="text" formControlName="invoiceNo" class="form-control form-control-user" id="invoice-no." placeholder="Invoice No." disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Invoice Title">
+                  <input type="email" formControlName="invoiceTitle" class="form-control form-control-user" id="invoice-title" placeholder="Invoice Title">
                 </div>
               </div>
             </div>
@@ -89,26 +89,30 @@
                 <h6 class="m-0 font-weight-bold text-dark">Card Title</h6>
               </div>
               <div class="card-body">
-                <div class="form-group row">
-                  <div class="col-sm-3 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="Enter Item">
-                  </div>
-                  <div class="col-sm-4">
-                    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Enter description">
-                  </div>
-                  <div class="col-sm-3">
-                    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Amount">
-                  </div>
-                  <div class="col-sm-2">
-                    <a href="#">
-                      <p class="icon-me"><i class="fa fa-trash-alt fa-fw"></i></p>
-                    </a>
+                <div formArrayName="invoiceItems" *ngFor="let item of invoiceForm.get('invoiceItems').controls; let i = index;">
+                  <div [formGroupName]="i">
+                    <div class="form-group row">
+                      <div class="col-sm-3 mb-3 mb-sm-0">
+                        <input type="text" formControlName="itemName" class="form-control form-control-user" id="exampleFirstName" placeholder="Enter Item">
+                      </div>
+                      <div class="col-sm-4">
+                        <input type="text" formControlName="itemDescription" class="form-control form-control-user" id="exampleLastName" placeholder="Enter description">
+                      </div>
+                      <div class="col-sm-3">
+                        <input type="text" formControlName="itemAmount" class="form-control form-control-user" id="exampleLastName" placeholder="Amount">
+                      </div>
+                      <div class="col-sm-2">
+                        <a (click)="removeInvoiceItem(i)">
+                          <p class="icon-me"><i class="fa fa-trash-alt fa-fw"></i></p>
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <a href="#" class="btn btn-primary btn-user btn-block">
+                  <button (click)="addInvoiceItem()" class="btn btn-primary btn-user btn-block">
                     Add an Item
-                  </a>
+                  </button>
                 </div>
 
                 <div class="form-group row">
@@ -116,7 +120,7 @@
 
                   </div>
                   <div class="col-sm-6">
-                    <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Total">
+                    <input type="text" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Total" disabled>
                   </div>
                 </div>
               </div>
@@ -127,21 +131,25 @@
                 <h6 class="m-0 font-weight-bold text-dark">Card Title</h6>
               </div>
               <div class="card-body">
-                <div class="form-group row">
-                  <div class="col-sm-5 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="exampleInputPassword" placeholder="Enter an authority">
-                  </div>
-                  <div class="col-sm-5">
-                    <input type="text" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Enter a department">
-                  </div>
-                  <div class="col-sm-2">
-                    <a href="#">
-                      <p class="icon-me"><i class="fa fa-trash-alt fa-fw"></i></p>
-                    </a>
+                <div formArrayName="authorities" *ngFor="let item of invoiceForm.get('authorities').controls; let i = index;">
+                  <div [formGroupName]="i">
+                    <div class="form-group row">
+                      <div class="col-sm-5 mb-3 mb-sm-0">
+                        <input type="text" formControlName="authorityName" class="form-control form-control-user" id="exampleInputPassword" placeholder="Enter an authority">
+                      </div>
+                      <div class="col-sm-5">
+                        <input type="text" formControlName="authorityDepartment" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Enter a department">
+                      </div>
+                      <div class="col-sm-2">
+                        <a (click)="removeAuthority(i)">
+                          <p class="icon-me"><i class="fa fa-trash-alt fa-fw"></i></p>
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <a href="#" class="btn btn-primary btn-user btn-block">
+                  <a (click)="addAuthority()" class="btn btn-primary btn-user btn-block">
                     Add an Authority
                   </a>
                 </div>
